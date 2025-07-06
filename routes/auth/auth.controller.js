@@ -13,13 +13,13 @@ exports.login = (req, res) => {
 
   const token = randomUUID();
   // todo add more arguments
-  res.cookie('authToken', token, { maxAge: 60 * 60 * 1000, sameSite: 'strict' });
+  res.cookie('auth-session-key', token, { maxAge: 60 * 60 * 1000, sameSite: 'strict' });
   res.json('You are logged in');
 }
 
 // Middleware to protect routes
 exports.verifyToken = (req, res, next) => {
-  const token = req.cookies['authToken'];
+  const token = req.cookies['auth-session-key'];
 
   if (!token) {
     return res.status(401).json({ message: 'Unauthorized' });
